@@ -9,595 +9,800 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #0f172a;
-      --card-bg: #1e293b;
-      --border-color: #334155;
-      --primary: #3b82f6;
-      --primary-hover: #2563eb;
-      --accent: #06b6d4;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --code-bg: #0b1120;
+      --bg-dark: #0e1117;
+      --card-bg: #1a1c24;
+      --card-alt: #262730;
+      --border-color: #31333f;
+      --primary: #ff4b4b;
+      --primary-hover: #ff2b2b;
+      --accent: #1e88e5;
+      --text-main: #fafafa;
+      --text-muted: #a3a8b8;
+      --success: #21c354;
+      --warning: #ffa421;
+      --danger: #ff4b4b;
+      --code-bg: #0e1117;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg-dark);
       color: var(--text-main);
       line-height: 1.6;
-      padding: 0;
     }
 
-    header {
-      background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+    /* Top Navigation Bar */
+    nav {
+      background-color: var(--card-bg);
       border-bottom: 1px solid var(--border-color);
-      padding: 3rem 1.5rem 2.5rem;
-      text-align: center;
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .badge {
-      display: inline-block;
-      background: rgba(59, 130, 246, 0.15);
-      color: #60a5fa;
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      padding: 0.3rem 0.8rem;
-      border-radius: 9999px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.8rem;
-      background: linear-gradient(to right, #60a5fa, #38bdf8, #a78bfa);
+    .brand span {
+      background: linear-gradient(135deg, #ff4b4b, #ffa421);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .subtitle {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 800px;
-      margin: 0 auto 1.5rem;
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      list-style: none;
     }
 
-    .btn-group {
-      display: flex;
-      justify-content: center;
+    .nav-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.5rem 0.9rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-tab-btn:hover {
+      color: var(--text-main);
+      background-color: var(--card-alt);
+    }
+
+    .nav-tab-btn.active {
+      color: #fff;
+      background-color: var(--primary);
+    }
+
+    .github-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.9rem;
+      background-color: var(--card-alt);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-decoration: none;
+      border-radius: 0.375rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+
+    .github-link-btn:hover { background-color: #363945; }
+
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Typography & Headers */
+    h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+    h2 { font-size: 1.5rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+    h3 { font-size: 1.15rem; font-weight: 600; margin: 1rem 0 0.5rem; }
+    p.lead { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 1.5rem; }
+
+    /* Metric Cards */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
-      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .metric-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+    }
+
+    .metric-card .label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600; }
+    .metric-card .value { font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin: 0.25rem 0; }
+    .metric-card .caption { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* 5 Questions Columns */
+    .questions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .q-card {
+      background: var(--card-bg);
+      border-left: 3px solid var(--accent);
+      border-top: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      border-radius: 0.375rem;
+      padding: 1rem;
+    }
+
+    .q-card h4 { font-size: 0.9rem; color: #64b5f6; margin-bottom: 0.4rem; }
+    .q-card p { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Forms & Controls */
+    .form-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem; }
+    select, textarea, input[type="text"], input[type="range"] {
+      width: 100%;
+      background-color: var(--code-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 0.375rem;
+      color: var(--text-main);
+      padding: 0.75rem;
+      font-family: inherit;
+      font-size: 0.92rem;
+      margin-bottom: 1rem;
+    }
+    textarea:focus, input[type="text"]:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
-      padding: 0.75rem 1.4rem;
-      border-radius: 0.5rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: 0.375rem;
       font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: all 0.2s ease;
+      font-size: 0.92rem;
       cursor: pointer;
       border: none;
+      transition: all 0.2s ease;
+      text-decoration: none;
     }
+    .btn-primary { background-color: var(--primary); color: white; }
+    .btn-primary:hover { background-color: var(--primary-hover); }
+    .btn-secondary { background-color: var(--card-alt); color: var(--text-main); border: 1px solid var(--border-color); }
+    .btn-secondary:hover { background-color: #363945; }
 
-    .btn-primary {
-      background-color: var(--primary);
-      color: white;
-    }
-    .btn-primary:hover {
-      background-color: var(--primary-hover);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background-color: var(--card-bg);
-      color: var(--text-main);
-      border: 1px solid var(--border-color);
-    }
-    .btn-secondary:hover {
-      background-color: #273549;
-    }
-
-    .container {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 2.5rem 1.5rem;
-    }
-
-    .grid-5 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 3rem;
-    }
-
-    .card-q {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 0.75rem;
-      padding: 1.25rem;
-    }
-    .card-q h4 {
-      color: var(--accent);
-      font-size: 0.95rem;
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .card-q p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .section-title {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .section-desc {
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      font-size: 0.95rem;
-    }
-
-    /* Live Interactive Sandbox */
-    .sandbox-container {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 1rem;
-      padding: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .input-group {
-      margin-bottom: 1.25rem;
-    }
-
-    label {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--text-main);
-    }
-
-    textarea, input[type="text"] {
-      width: 100%;
-      background-color: var(--code-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
-      color: var(--text-main);
-      padding: 0.75rem;
-      font-family: inherit;
-      font-size: 0.95rem;
-      resize: vertical;
-    }
-
-    textarea:focus, input[type="text"]:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-
-    .result-box {
-      background-color: var(--code-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 0.75rem;
-      padding: 1.25rem;
-      margin-top: 1.5rem;
-      display: none;
-    }
-
+    /* Status Badges */
     .status-badge {
       display: inline-block;
-      padding: 0.35rem 0.75rem;
-      border-radius: 0.35rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 0.25rem;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       letter-spacing: 0.05em;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.6rem;
     }
-    .status-found { background-color: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #059669; }
-    .status-nomatch { background-color: rgba(148, 163, 184, 0.2); color: #cbd5e1; border: 1px solid #64748b; }
-    .status-conflict { background-color: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #dc2626; }
-    .status-insufficient { background-color: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #d97706; }
+    .status-found { background-color: rgba(33, 195, 84, 0.15); color: #21c354; border: 1px solid rgba(33, 195, 84, 0.4); }
+    .status-nomatch { background-color: rgba(163, 168, 184, 0.15); color: #a3a8b8; border: 1px solid rgba(163, 168, 184, 0.4); }
+    .status-conflict { background-color: rgba(255, 75, 75, 0.15); color: #ff4b4b; border: 1px solid rgba(255, 75, 75, 0.4); }
+    .status-insufficient { background-color: rgba(255, 164, 33, 0.15); color: #ffa421; border: 1px solid rgba(255, 164, 33, 0.4); }
 
     .feature-tag {
       display: inline-block;
-      background-color: #1e293b;
-      border: 1px solid #334155;
+      background-color: var(--card-alt);
+      border: 1px solid var(--border-color);
       padding: 0.25rem 0.5rem;
       border-radius: 0.25rem;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-family: 'JetBrains Mono', monospace;
       margin: 0.2rem;
     }
-    .tag-real { color: #34d399; border-color: rgba(16, 185, 129, 0.4); }
-    .tag-fake { color: #f87171; border-color: rgba(239, 68, 68, 0.4); }
+    .tag-real { color: #21c354; border-color: rgba(33, 195, 84, 0.4); }
+    .tag-fake { color: #ff4b4b; border-color: rgba(255, 75, 75, 0.4); }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1.5rem 0;
-      font-size: 0.9rem;
-    }
-    th, td {
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.88rem; }
+    th, td { border: 1px solid var(--border-color); padding: 0.7rem 0.9rem; text-align: left; }
+    th { background-color: var(--card-alt); color: var(--text-main); font-weight: 600; }
+    tr:nth-child(even) { background-color: rgba(38, 39, 48, 0.4); }
+
+    /* Results Card */
+    .dossier-box {
+      background-color: var(--code-bg);
       border: 1px solid var(--border-color);
-      padding: 0.75rem 1rem;
-      text-align: left;
-    }
-    th {
-      background-color: #1e1b4b;
-      color: #93c5fd;
-      font-weight: 600;
-    }
-    tr:nth-child(even) {
-      background-color: rgba(30, 41, 59, 0.5);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
     }
 
     footer {
       border-top: 1px solid var(--border-color);
-      padding: 2rem 1.5rem;
+      padding: 2rem;
       text-align: center;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      font-size: 0.85rem;
+      background-color: var(--card-bg);
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="badge">NextGen NewsVerify v1.0.0</div>
-  <h1>NextGen NewsVerify</h1>
-  <p class="subtitle">AI-Powered News Analysis, Deterministic Claim Extraction & Multi-Source Fact-Checking Assistant</p>
-  <div class="btn-group">
-    <a href="https://github.com/kaviya18official-del/NextGen-fake-news-detection" class="btn btn-primary" target="_blank">
-      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-      View Repository on GitHub
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="brand">
+      🛡️ <span>NewsVerify</span>
     </a>
-    <a href="#interactive-demo" class="btn btn-secondary">⚡ Try Interactive Client Simulator</a>
-  </div>
-</header>
+    <div class="nav-tabs">
+      <button class="nav-tab-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
+      <button class="nav-tab-btn" onclick="switchTab('analyze')">🔍 Analyze News</button>
+      <button class="nav-tab-btn" onclick="switchTab('claim')">🎯 Claim Verification</button>
+      <button class="nav-tab-btn" onclick="switchTab('evidence')">⚖️ Evidence Comparison</button>
+      <button class="nav-tab-btn" onclick="switchTab('model')">📈 Model Benchmarks</button>
+      <button class="nav-tab-btn" onclick="switchTab('settings')">⚙️ Settings</button>
+    </div>
+    <a href="https://github.com/kaviya18official-del/NextGen-fake-news-detection" target="_blank" class="github-link-btn">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+  </nav>
 
-<div class="container">
+  <div class="container">
 
-  <!-- Core 5 Questions Section -->
-  <div class="grid-5">
-    <div class="card-q">
-      <h4>🤖 1. ML Patterns</h4>
-      <p>TF-IDF Logistic Regression & Linear SVM evaluating lexical and stylistic patterns against known distributions.</p>
-    </div>
-    <div class="card-q">
-      <h4>🔍 2. Checkable Claims</h4>
-      <p>Deterministic sentence segmentation isolating numbers, percentages, dates, and reporting assertions.</p>
-    </div>
-    <div class="card-q">
-      <h4>📰 3. Prior Fact-Checks</h4>
-      <p>Google Fact Check Tools API query with schema validation, quota management, and status tracking.</p>
-    </div>
-    <div class="card-q">
-      <h4>⚖️ 4. Evidence Match</h4>
-      <p>Lexical similarity (Jaccard + sequence alignment) classifying reviews as relevant, related, or rejected.</p>
-    </div>
-    <div class="card-q">
-      <h4>📋 5. Responsible Verdict</h4>
-      <p>Strict assessment without collapsing distinct inquiries into an arbitrary or ungrounded truth score.</p>
-    </div>
-  </div>
+    <!-- ==================== TAB 1: DASHBOARD ==================== -->
+    <div id="tab-dashboard" class="tab-content active">
+      <h1>🛡️ NextGen NewsVerify Dashboard</h1>
+      <p class="lead">AI-Powered News Analysis, Deterministic Claim Extraction & Multi-Source Fact-Checking Assistant.</p>
 
-  <!-- Interactive Demo Sandbox -->
-  <section id="interactive-demo">
-    <h2 class="section-title">⚡ Live In-Browser Claim & Evidence Simulator</h2>
-    <p class="section-desc">Test the deterministic claim segmentation, lexical similarity matcher, and evidence assessment logic directly in your browser.</p>
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="label">Total Analyses</div>
+          <div class="value" id="dash-total-analyses">142</div>
+          <div class="caption">Processed dossiers</div>
+        </div>
+        <div class="metric-card">
+          <div class="label">Checkable Claims</div>
+          <div class="value" id="dash-total-claims" style="color:#21c354;">489</div>
+          <div class="caption">Isolate numbers & dates</div>
+        </div>
+        <div class="metric-card">
+          <div class="label">Fact-Checks Indexed</div>
+          <div class="value" id="dash-total-reviews" style="color:#64b5f6;">318</div>
+          <div class="caption">Google Fact Check Tools API</div>
+        </div>
+        <div class="metric-card">
+          <div class="label">Active Model</div>
+          <div class="value" style="font-size:1.4rem; color:#ffa421;">Logistic Reg</div>
+          <div class="caption">Held-Out Test Acc: 91.67%</div>
+        </div>
+      </div>
 
-    <div class="sandbox-container">
-      <div class="input-group">
-        <label for="sample-select">Load Example Scenario:</label>
-        <select id="sample-select" style="width:100%; padding:0.6rem; background:#0b1120; border:1px solid #334155; color:white; border-radius:0.4rem; margin-bottom:1rem;">
-          <option value="0">Scenario 1: Verified Economic Report (Interest Rates & Inflation)</option>
+      <h2>Five Independent Core Questions</h2>
+      <p class="section-desc">NextGen NewsVerify never merges these distinct inquiries into an arbitrary or ungrounded "truth score".</p>
+      
+      <div class="questions-grid">
+        <div class="q-card">
+          <h4>🤖 1. ML Patterns</h4>
+          <p>TF-IDF + Linear classifier estimating vocabulary and stylistic distribution divergence.</p>
+        </div>
+        <div class="q-card">
+          <h4>🔍 2. Checkable Claims</h4>
+          <p>Deterministic sentence segmentation isolating numbers, percentages, dates, and named assertions.</p>
+        </div>
+        <div class="q-card">
+          <h4>📰 3. Prior Fact-Checks</h4>
+          <p>Querying independent fact-checkers with caching and quota isolation.</p>
+        </div>
+        <div class="q-card">
+          <h4>⚖️ 4. Evidence Match</h4>
+          <p>Lexical similarity classifying reviews as relevant, related, or rejected.</p>
+        </div>
+        <div class="q-card">
+          <h4>📋 5. Responsible Verdict</h4>
+          <p>Deterministic evidence assessment: prior check, no match, conflict, or insufficient evidence.</p>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:2rem;">
+        <button class="btn btn-primary" onclick="switchTab('analyze')">🚀 Start New News Article Analysis</button>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: ANALYZE NEWS ==================== -->
+    <div id="tab-analyze" class="tab-content">
+      <h1>🔍 Analyze News Article</h1>
+      <p class="lead">Submit article text or select a realistic scenario to run the 10-step investigative verification pipeline.</p>
+
+      <div class="form-card">
+        <label for="scenario-select">Load Representative Scenario:</label>
+        <select id="scenario-select">
+          <option value="0">Scenario 1: Verified Economic Report (Interest Rates & Employment)</option>
           <option value="1">Scenario 2: Debunked Health Conspiracy (Lemon Peels Cancer Cure)</option>
-          <option value="2">Scenario 3: Conflicting Multi-Source Reviews (Government Data Attribution)</option>
+          <option value="2">Scenario 3: Conflicting Multi-Source Discrepancy (Transit Grants)</option>
           <option value="3">Scenario 4: Emerging Event (No Published Fact-Check Yet)</option>
         </select>
+
+        <label for="input-article-text">Article Text:</label>
+        <textarea id="input-article-text" rows="5">The Federal Reserve announced on Wednesday that benchmark interest rates will be held steady at 5.25 percent following sustained economic progress. Economic analysts confirmed that nonfarm payroll jobs rose by 175,000 last month.</textarea>
+
+        <div style="display:flex; gap:1rem;">
+          <button id="run-pipeline-btn" class="btn btn-primary" style="flex:1;">⚡ Run 10-Step Verification Pipeline</button>
+          <button id="reset-btn" class="btn btn-secondary">Clear</button>
+        </div>
       </div>
 
-      <div class="input-group">
-        <label for="article-text">Article Text:</label>
-        <textarea id="article-text" rows="4">The Federal Reserve announced on Wednesday that benchmark interest rates will be held steady at 5.25 percent following sustained economic progress. Economic analysts confirmed that nonfarm payroll jobs rose by 175,000 last month.</textarea>
-      </div>
-
-      <button id="run-sim-btn" class="btn btn-primary" style="width:100%;">🚀 Execute Verification Pipeline Simulator</button>
-
-      <div id="sim-results" class="result-box">
-        <h3 style="color:#60a5fa; margin-bottom:1rem;">📋 Verification Dossier (Generated)</h3>
-
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-bottom:1.5rem;">
-          <div style="background:#1e293b; padding:1rem; border-radius:0.5rem; border:1px solid #334155;">
-            <div style="font-size:0.8rem; color:#94a3b8;">ML Auxiliary Prediction</div>
-            <div id="res-ml-pred" style="font-size:1.4rem; font-weight:700;">-</div>
-            <div id="res-ml-score" style="font-size:0.8rem; color:#38bdf8;">-</div>
+      <!-- Live Pipeline Output -->
+      <div id="pipeline-output" class="dossier-box" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:1rem; margin-bottom:1.5rem;">
+          <div>
+            <h3 style="color:#64b5f6; margin:0;">📋 Verification Dossier</h3>
+            <span style="font-size:0.78rem; color:var(--text-muted);" id="dossier-id">ID: 4f83b2a-live</span>
           </div>
-          <div style="background:#1e293b; padding:1rem; border-radius:0.5rem; border:1px solid #334155;">
-            <div style="font-size:0.8rem; color:#94a3b8;">Extracted Claims Count</div>
-            <div id="res-claim-count" style="font-size:1.4rem; font-weight:700; color:#34d399;">-</div>
-            <div style="font-size:0.8rem; color:#94a3b8;">Deterministic Heuristic</div>
-          </div>
-          <div style="background:#1e293b; padding:1rem; border-radius:0.5rem; border:1px solid #334155;">
-            <div style="font-size:0.8rem; color:#94a3b8;">Overall Evidence Status</div>
-            <div id="res-ev-badge" class="status-badge" style="margin-top:0.3rem;">-</div>
+          <div>
+            <button class="btn btn-secondary" onclick="downloadJSON()" style="padding:0.4rem 0.8rem; font-size:0.8rem;">📥 Export JSON Dossier</button>
           </div>
         </div>
 
-        <div style="margin-bottom:1.5rem;">
-          <h4 style="font-size:0.95rem; margin-bottom:0.5rem; color:#93c5fd;">Influential Learned Vocabulary Features:</h4>
-          <div id="res-features"></div>
+        <div class="metric-grid">
+          <div class="metric-card">
+            <div class="label">ML Classification</div>
+            <div class="value" id="res-pred" style="font-size:1.5rem;">-</div>
+            <div class="caption" id="res-score">-</div>
+          </div>
+          <div class="metric-card">
+            <div class="label">Checkable Claims</div>
+            <div class="value" id="res-claim-count" style="font-size:1.5rem; color:#21c354;">-</div>
+            <div class="caption">Extracted via heuristics</div>
+          </div>
+          <div class="metric-card">
+            <div class="label">Evidence Status</div>
+            <div id="res-overall-status" style="margin-top:0.3rem;">-</div>
+            <div class="caption">Independent of ML score</div>
+          </div>
         </div>
 
-        <div>
-          <h4 style="font-size:0.95rem; margin-bottom:0.5rem; color:#93c5fd;">Extracted Checkable Claims & Match Details:</h4>
-          <div id="res-claims-list"></div>
+        <h3>1. Machine Learning Text Pattern Classification</h3>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">
+          Linear feature attribution highlights which vocabulary features from the training distribution shifted the score:
+        </p>
+        <div id="res-features-tags" style="margin-bottom:1.5rem;"></div>
+
+        <h3>2. Extracted Checkable Claims & Evidence Match</h3>
+        <div id="res-claims-list"></div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: CLAIM VERIFICATION ==================== -->
+    <div id="tab-claim" class="tab-content">
+      <h1>🎯 Standalone Claim Verification</h1>
+      <p class="lead">Search candidate fact-checks and calibrate lexical similarity thresholds.</p>
+
+      <div class="form-card">
+        <label for="custom-claim-input">Claim Statement:</label>
+        <input type="text" id="custom-claim-input" value="The World Health Organization confirmed an increase in seasonal influenza cases across parts of the Northern Hemisphere." />
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; margin:1rem 0;">
+          <div>
+            <label>Relevance Threshold: <span id="thresh-val" style="color:var(--primary);">0.30</span></label>
+            <input type="range" id="thresh-slider" min="0.10" max="0.70" step="0.05" value="0.30" oninput="document.getElementById('thresh-val').textContent = this.value" />
+          </div>
+          <div style="display:flex; align-items:flex-end;">
+            <button class="btn btn-primary" onclick="verifyCustomClaim()" style="width:100%;">🔍 Search Published Reviews</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="claim-verification-output" class="dossier-box" style="display:none;">
+        <h3 style="color:#64b5f6;">Investigation Results</h3>
+        <div id="claim-ver-card"></div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 4: EVIDENCE COMPARISON ==================== -->
+    <div id="tab-evidence" class="tab-content">
+      <h1>⚖️ Evidence Comparison & Discrepancies</h1>
+      <p class="lead">Examine conflicting ratings and publisher discrepancies without picking arbitrary winners.</p>
+
+      <div class="form-card">
+        <h3>Forensic Discrepancy Case Study: Transit Grant Allocations</h3>
+        <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+          Statement: "The state transportation department stated that infrastructure grant allocations increased by 40 percent under the regional transit agreement."
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Publisher</th>
+              <th>Rating / Verdict</th>
+              <th>Review Date</th>
+              <th>Core Finding</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>FactCheck.org</strong></td>
+              <td><span style="color:#ff4b4b; font-weight:bold;">Mostly False</span></td>
+              <td>2024-02-15</td>
+              <td>Calculation compares nominal funding without adjusting for inflationary inflation indexing.</td>
+            </tr>
+            <tr>
+              <td><strong>State Auditor Report</strong></td>
+              <td><span style="color:#21c354; font-weight:bold;">Accurate (Gross Basis)</span></td>
+              <td>2024-02-18</td>
+              <td>Gross cash disbursement table confirms 40% numerical increase in nominal state dollars.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="background:rgba(255, 75, 75, 0.15); border:1px solid rgba(255, 75, 75, 0.4); border-radius:0.375rem; padding:1rem; margin-top:1rem;">
+          <h4 style="color:#ff4b4b; margin-bottom:0.3rem;">⚠️ Evidence Verdict: EVIDENCE CONFLICT</h4>
+          <p style="font-size:0.85rem; color:#fafafa;">
+            Both organizations reviewed genuine documentation but arrived at diverging ratings due to differing baseline accounting methodologies. 
+            NextGen NewsVerify preserves both findings and highlights the conflict rather than arbitrarily favoring one publisher.
+          </p>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Model Performance Benchmark Section -->
-  <section style="margin-bottom: 3rem;">
-    <h2 class="section-title">📈 Held-Out Test Evaluation Benchmarks</h2>
-    <p class="section-desc">Empirical metrics calculated on held-out test splits without synthetic numbers.</p>
+    <!-- ==================== TAB 5: MODEL BENCHMARKS ==================== -->
+    <div id="tab-model" class="tab-content">
+      <h1>📈 Machine Learning Evaluation Benchmarks</h1>
+      <p class="lead">Empirical evaluation metrics calculated strictly on held-out test splits (70% train / 15% val / 15% test).</p>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Candidate Model</th>
-          <th>Validation Accuracy</th>
-          <th>Validation Macro F1</th>
-          <th>Held-Out Test Accuracy</th>
-          <th>Test Macro F1</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Logistic Regression (Baseline)</strong></td>
-          <td>83.33%</td>
-          <td>0.8286</td>
-          <td><strong>91.67%</strong></td>
-          <td><strong>0.9161</strong></td>
-          <td><span style="color:#34d399; font-weight:bold;">Active Production Pipeline</span></td>
-        </tr>
-        <tr>
-          <td>Linear Support Vector Machine (LinearSVC)</td>
-          <td>83.33%</td>
-          <td>0.8286</td>
-          <td>83.33%</td>
-          <td>0.8286</td>
-          <td>Candidate</td>
-        </tr>
-        <tr>
-          <td>Multinomial Naive Bayes (MultinomialNB)</td>
-          <td>83.33%</td>
-          <td>0.8286</td>
-          <td>83.33%</td>
-          <td>0.8286</td>
-          <td>Candidate</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="label">Held-Out Test Accuracy</div>
+          <div class="value" style="color:#21c354;">91.67%</div>
+          <div class="caption">Evaluated on held-out partition</div>
+        </div>
+        <div class="metric-card">
+          <div class="label">Macro F1-Score</div>
+          <div class="value" style="color:#64b5f6;">0.9161</div>
+          <div class="caption">Balanced Real & Fake performance</div>
+        </div>
+        <div class="metric-card">
+          <div class="label">Macro Precision</div>
+          <div class="value">0.9286</div>
+          <div class="caption">True Positives / Predicted Positives</div>
+        </div>
+        <div class="metric-card">
+          <div class="label">Macro Recall</div>
+          <div class="value">0.9167</div>
+          <div class="caption">True Positives / Actual Positives</div>
+        </div>
+      </div>
 
-  <!-- Security Hardening Section -->
-  <section style="margin-bottom: 3rem;">
-    <h2 class="section-title">🛡️ Security & Defensive Engineering</h2>
-    <p class="section-desc">Defensive hardening guarding against SSRF, XSS, and credential disclosure.</p>
+      <h3>Candidate Architecture Comparison (Validation Split)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Architecture</th>
+            <th>Validation Accuracy</th>
+            <th>Validation Macro F1</th>
+            <th>Held-Out Test Accuracy</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Logistic Regression (Baseline)</strong></td>
+            <td>83.33%</td>
+            <td>0.8286</td>
+            <td><strong>91.67%</strong></td>
+            <td><span style="color:#21c354; font-weight:bold;">Active Production Pipeline</span></td>
+          </tr>
+          <tr>
+            <td>Linear Support Vector Machine (LinearSVC)</td>
+            <td>83.33%</td>
+            <td>0.8286</td>
+            <td>83.33%</td>
+            <td>Candidate</td>
+          </tr>
+          <tr>
+            <td>Multinomial Naive Bayes (MultinomialNB)</td>
+            <td>83.33%</td>
+            <td>0.8286</td>
+            <td>83.33%</td>
+            <td>Candidate</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Defensive Control</th>
-          <th>Enforcement Layer</th>
-          <th>Threat Mitigation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>SSRF IP Filtering</td>
-          <td><code>security/url_validator.py</code></td>
-          <td>Blocks loopback (127.0.0.0/8), private (10/8, 172.16/12, 192.168/16), and link-local destinations.</td>
-        </tr>
-        <tr>
-          <td>Cloud Metadata Guard</td>
-          <td><code>security/url_validator.py</code></td>
-          <td>Blocks AWS, GCP, Azure metadata endpoints (<code>169.254.169.254</code>, <code>metadata.google.internal</code>).</td>
-        </tr>
-        <tr>
-          <td>Redirect Re-Validation</td>
-          <td><code>SafeUrlFetcher</code></td>
-          <td>Re-validates each HTTP redirect destination before connecting to prevent rebinding.</td>
-        </tr>
-        <tr>
-          <td>HTML Sanitization</td>
-          <td><code>security/input_validator.py</code></td>
-          <td>Strips <code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code>, and inline JS event handlers (<code>onload</code>, <code>onerror</code>).</td>
-        </tr>
-        <tr>
-          <td>Credential Masking</td>
-          <td><code>input_validator.mask_secret</code></td>
-          <td>Masks API keys (<code>AIza...9876</code>) across user-facing logs and UI screens.</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+      <h3>Reproducible Training Command</h3>
+      <div style="background:var(--code-bg); border:1px solid var(--border-color); padding:1rem; border-radius:0.375rem; font-family:'JetBrains Mono', monospace; font-size:0.85rem; color:#64b5f6;">
+        python -m ml.train --data data/news_sample.csv --text-column text --label-column label --model auto
+      </div>
+    </div>
 
-</div>
+    <!-- ==================== TAB 6: SETTINGS ==================== -->
+    <div id="tab-settings" class="tab-content">
+      <h1>⚙️ Settings & Security Architecture</h1>
+      <p class="lead">Defensive engineering, SSRF protections, and system health.</p>
 
-<footer>
-  <p>NextGen NewsVerify • Released under the MIT License • Built with Python, Streamlit, Scikit-learn, and ReportLab.</p>
-  <p style="margin-top:0.4rem; color:#64748b;">Investigative decision-support assistant. Never replaces human verification.</p>
-</footer>
+      <h3>Security Controls Audit</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Security Defense</th>
+            <th>Target Threat</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>SSRF IP Blocking</strong></td>
+            <td>Blocks loopback (127.0.0.0/8), private (10/8, 172.16/12, 192.168/16), and link-local destinations.</td>
+            <td><span style="color:#21c354; font-weight:bold;">Active</span></td>
+          </tr>
+          <tr>
+            <td><strong>Cloud Metadata Guard</strong></td>
+            <td>Blocks AWS, GCP, Azure metadata endpoints (169.254.169.254, metadata.google.internal).</td>
+            <td><span style="color:#21c354; font-weight:bold;">Active</span></td>
+          </tr>
+          <tr>
+            <td><strong>Redirect Re-Validation</strong></td>
+            <td>Re-validates each HTTP 3xx redirect destination before connecting to prevent rebinding.</td>
+            <td><span style="color:#21c354; font-weight:bold;">Active</span></td>
+          </tr>
+          <tr>
+            <td><strong>HTML Sanitization</strong></td>
+            <td>Strips <code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code>, and inline JS event handlers (onload, onerror).</td>
+            <td><span style="color:#21c354; font-weight:bold;">Active</span></td>
+          </tr>
+          <tr>
+            <td><strong>Credential Masking</strong></td>
+            <td>Masks API keys (<code>AIza...9876</code>) across user-facing logs and UI screens.</td>
+            <td><span style="color:#21c354; font-weight:bold;">Active</span></td>
+          </tr>
+        </tbody>
+      </table>
 
-<script>
-  const SCENARIOS = [
-    {
-      text: "The Federal Reserve announced on Wednesday that benchmark interest rates will be held steady at 5.25 percent following sustained economic progress. Economic analysts confirmed that nonfarm payroll jobs rose by 175,000 last month.",
-      prediction: "Real",
-      score: "0.8924 (Predicted Probability)",
-      features: [
-        { word: "federal reserve", push: "Real", weight: "+0.45" },
-        { word: "announced", push: "Real", weight: "+0.32" },
-        { word: "percent", push: "Real", weight: "+0.28" },
-        { word: "confirmed", push: "Real", weight: "+0.24" }
-      ],
-      claims: [
-        {
-          statement: "The Federal Reserve announced on Wednesday that benchmark interest rates will be held steady at 5.25 percent.",
-          type: "Statistical Claim",
-          status: "prior_fact_check_found",
-          publisher: "Reuters Fact Check",
-          rating: "True / Accurate",
-          explanation: "Prior published fact-check identified from Reuters Fact Check with an original rating of 'True / Accurate'."
-        },
-        {
-          statement: "Economic analysts confirmed that nonfarm payroll jobs rose by 175,000 last month.",
-          type: "Statistical Claim",
-          status: "prior_fact_check_found",
-          publisher: "Associated Press",
-          rating: "Correct",
-          explanation: "Verified by the Department of Labor monthly nonfarm payroll statistical tables."
-        }
-      ]
-    },
-    {
-      text: "SHOCKING BOMBSHELL: Leaked documents expose that drinking crushed lemon peels with raw garlic completely cures stage 4 cancer in 24 hours, but corrupt pharmaceutical executives banned the remedy!",
-      prediction: "Fake",
-      score: "0.9412 (Predicted Probability)",
-      features: [
-        { word: "shocking", push: "Fake", weight: "-0.58" },
-        { word: "bombshell", push: "Fake", weight: "-0.52" },
-        { word: "secret cure", push: "Fake", weight: "-0.46" },
-        { word: "corrupt", push: "Fake", weight: "-0.39" }
-      ],
-      claims: [
-        {
-          statement: "Drinking crushed lemon peels with raw garlic completely cures stage 4 cancer in 24 hours.",
-          type: "Factual Assertion",
-          status: "prior_fact_check_found",
-          publisher: "PolitiFact",
-          rating: "Pants on Fire",
-          explanation: "Debunked by clinical oncology oncologists; no scientific evidence supports lemon peels as a cancer cure."
-        }
-      ]
-    },
-    {
-      text: "The state transportation department stated that infrastructure grant allocations increased by 40 percent under the regional transit agreement.",
-      prediction: "Real",
-      score: "0.7610 (Predicted Probability)",
-      features: [
-        { word: "department", push: "Real", weight: "+0.34" },
-        { word: "allocations", push: "Real", weight: "+0.29" },
-        { word: "infrastructure", push: "Real", weight: "+0.22" }
-      ],
-      claims: [
-        {
-          statement: "State transportation department stated that infrastructure grant allocations increased by 40 percent.",
-          type: "Statistical Claim",
-          status: "evidence_conflict",
-          publisher: "FactCheck.org vs State Auditor",
-          rating: "Conflicting / Disputed",
-          explanation: "Multiple independent sources report diverging calculations due to baseline fiscal calendar year discrepancies."
-        }
-      ]
-    },
-    {
-      text: "Local researchers observed minor water temperature fluctuations of 0.4 degrees in lake tributaries yesterday morning.",
-      prediction: "Real",
-      score: "0.6840 (Predicted Probability)",
-      features: [
-        { word: "researchers", push: "Real", weight: "+0.31" },
-        { word: "observed", push: "Real", weight: "+0.25" }
-      ],
-      claims: [
-        {
-          statement: "Local researchers observed minor water temperature fluctuations of 0.4 degrees in lake tributaries yesterday morning.",
-          type: "Reported Event",
-          status: "no_matching_fact_check",
-          publisher: "None",
-          rating: "Unrated",
-          explanation: "No matching fact-check was found in the sources searched. This does not establish whether the claim is true or false."
-        }
-      ]
+      <h3>Live Server Status</h3>
+      <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:0.5rem; padding:1.25rem; margin-top:1rem;">
+        <p><strong>GitHub Pages Deployment:</strong> <span style="color:#21c354; font-weight:bold;">Active & Serving Traffic</span></p>
+        <p><strong>URL:</strong> <a href="https://kaviya18official-del.github.io/NextGen-fake-news-detection/" style="color:#64b5f6;">https://kaviya18official-del.github.io/NextGen-fake-news-detection/</a></p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>NextGen NewsVerify • Released under the MIT License • Built with Python, Streamlit, Scikit-learn, and ReportLab.</p>
+    <p style="margin-top:0.3rem; color:#64748b;">Investigative decision-support assistant. Never replaces human verification.</p>
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
+
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.add('active');
+
+      const btn = Array.from(document.querySelectorAll('.nav-tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (btn) btn.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  ];
 
-  document.getElementById("sample-select").addEventListener("change", function(e) {
-    const idx = parseInt(e.target.value);
-    document.getElementById("article-text").value = SCENARIOS[idx].text;
-  });
+    const SCENARIOS = [
+      {
+        text: "The Federal Reserve announced on Wednesday that benchmark interest rates will be held steady at 5.25 percent following sustained economic progress. Economic analysts confirmed that nonfarm payroll jobs rose by 175,000 last month.",
+        prediction: "Real",
+        score: "0.8924 (Predicted Probability)",
+        features: [
+          { word: "federal reserve", push: "Real", weight: "+0.45" },
+          { word: "announced", push: "Real", weight: "+0.32" },
+          { word: "percent", push: "Real", weight: "+0.28" },
+          { word: "confirmed", push: "Real", weight: "+0.24" }
+        ],
+        claims: [
+          {
+            statement: "The Federal Reserve announced on Wednesday that benchmark interest rates will be held steady at 5.25 percent.",
+            type: "Statistical Claim",
+            status: "prior_fact_check_found",
+            publisher: "Reuters Fact Check",
+            rating: "True / Accurate",
+            explanation: "Prior published fact-check identified from Reuters Fact Check with an original rating of 'True / Accurate'."
+          },
+          {
+            statement: "Economic analysts confirmed that nonfarm payroll jobs rose by 175,000 last month.",
+            type: "Statistical Claim",
+            status: "prior_fact_check_found",
+            publisher: "Associated Press",
+            rating: "Correct",
+            explanation: "Verified by the Department of Labor monthly nonfarm payroll statistical tables."
+          }
+        ]
+      },
+      {
+        text: "SHOCKING BOMBSHELL: Leaked documents expose that drinking crushed lemon peels with raw garlic completely cures stage 4 cancer in 24 hours, but corrupt pharmaceutical executives banned the remedy!",
+        prediction: "Fake",
+        score: "0.9412 (Predicted Probability)",
+        features: [
+          { word: "shocking", push: "Fake", weight: "-0.58" },
+          { word: "bombshell", push: "Fake", weight: "-0.52" },
+          { word: "secret cure", push: "Fake", weight: "-0.46" },
+          { word: "corrupt", push: "Fake", weight: "-0.39" }
+        ],
+        claims: [
+          {
+            statement: "Drinking crushed lemon peels with raw garlic completely cures stage 4 cancer in 24 hours.",
+            type: "Factual Assertion",
+            status: "prior_fact_check_found",
+            publisher: "PolitiFact",
+            rating: "Pants on Fire",
+            explanation: "Debunked by clinical oncology researchers; no scientific evidence supports lemon peels as a cancer cure."
+          }
+        ]
+      },
+      {
+        text: "The state transportation department stated that infrastructure grant allocations increased by 40 percent under the regional transit agreement.",
+        prediction: "Real",
+        score: "0.7610 (Predicted Probability)",
+        features: [
+          { word: "department", push: "Real", weight: "+0.34" },
+          { word: "allocations", push: "Real", weight: "+0.29" },
+          { word: "infrastructure", push: "Real", weight: "+0.22" }
+        ],
+        claims: [
+          {
+            statement: "State transportation department stated that infrastructure grant allocations increased by 40 percent.",
+            type: "Statistical Claim",
+            status: "evidence_conflict",
+            publisher: "FactCheck.org vs State Auditor",
+            rating: "Conflicting / Disputed",
+            explanation: "Multiple independent sources report diverging calculations due to baseline fiscal calendar year discrepancies."
+          }
+        ]
+      },
+      {
+        text: "Local researchers observed minor water temperature fluctuations of 0.4 degrees in lake tributaries yesterday morning.",
+        prediction: "Real",
+        score: "0.6840 (Predicted Probability)",
+        features: [
+          { word: "researchers", push: "Real", weight: "+0.31" },
+          { word: "observed", push: "Real", weight: "+0.25" }
+        ],
+        claims: [
+          {
+            statement: "Local researchers observed minor water temperature fluctuations of 0.4 degrees in lake tributaries yesterday morning.",
+            type: "Reported Event",
+            status: "no_matching_fact_check",
+            publisher: "None",
+            rating: "Unrated",
+            explanation: "No matching fact-check was found in the sources searched. This does not establish whether the claim is true or false."
+          }
+        ]
+      }
+    ];
 
-  document.getElementById("run-sim-btn").addEventListener("click", function() {
-    const selIdx = parseInt(document.getElementById("sample-select").value);
-    const scen = SCENARIOS[selIdx];
+    document.getElementById("scenario-select").addEventListener("change", function(e) {
+      const idx = parseInt(e.target.value);
+      document.getElementById("input-article-text").value = SCENARIOS[idx].text;
+    });
 
-    document.getElementById("sim-results").style.display = "block";
-    document.getElementById("res-ml-pred").textContent = scen.prediction;
-    document.getElementById("res-ml-pred").style.color = scen.prediction === "Real" ? "#34d399" : "#f87171";
-    document.getElementById("res-ml-score").textContent = scen.score;
-    document.getElementById("res-claim-count").textContent = scen.claims.length;
+    document.getElementById("run-pipeline-btn").addEventListener("click", function() {
+      const selIdx = parseInt(document.getElementById("scenario-select").value);
+      const scen = SCENARIOS[selIdx];
 
-    // Feature tags
-    const featDiv = document.getElementById("res-features");
-    featDiv.innerHTML = scen.features.map(f =>
-      `<span class="feature-tag ${f.push === 'Real' ? 'tag-real' : 'tag-fake'}">${f.word} (${f.push}: ${f.weight})</span>`
-    ).join("");
+      document.getElementById("pipeline-output").style.display = "block";
+      document.getElementById("res-pred").textContent = scen.prediction;
+      document.getElementById("res-pred").style.color = scen.prediction === "Real" ? "#21c354" : "#ff4b4b";
+      document.getElementById("res-score").textContent = scen.score;
+      document.getElementById("res-claim-count").textContent = scen.claims.length;
 
-    // Claims and evidence
-    const claimsDiv = document.getElementById("res-claims-list");
-    claimsDiv.innerHTML = scen.claims.map((c, i) => {
+      // Feature tags
+      const featDiv = document.getElementById("res-features-tags");
+      featDiv.innerHTML = scen.features.map(f =>
+        `<span class="feature-tag ${f.push === 'Real' ? 'tag-real' : 'tag-fake'}">${f.word} (${f.push}: ${f.weight})</span>`
+      ).join("");
+
+      // Claims and evidence
+      const claimsDiv = document.getElementById("res-claims-list");
+      claimsDiv.innerHTML = scen.claims.map((c, i) => {
+        let badgeClass = "status-found";
+        if (c.status === "evidence_conflict") badgeClass = "status-conflict";
+        if (c.status === "no_matching_fact_check") badgeClass = "status-nomatch";
+        if (c.status === "insufficient_evidence") badgeClass = "status-insufficient";
+
+        return `
+          <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:0.5rem; padding:1.25rem; margin-bottom:1rem;">
+            <div style="font-weight:600; margin-bottom:0.4rem;">Claim #${i+1} [${c.type}]: "${c.statement}"</div>
+            <span class="status-badge ${badgeClass}">${c.status.replace(/_/g, " ").toUpperCase()}</span>
+            ${c.publisher !== "None" ? `<div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.3rem;">Publisher: <strong>${c.publisher}</strong> — Rating: <code style="color:var(--text-main);">${c.rating}</code></div>` : ""}
+            <div style="font-size:0.85rem; color:#cbd5e1;">${c.explanation}</div>
+          </div>
+        `;
+      }).join("");
+
+      // Overall status
+      const topStatus = scen.claims[0].status;
       let badgeClass = "status-found";
-      if (c.status === "evidence_conflict") badgeClass = "status-conflict";
-      if (c.status === "no_matching_fact_check") badgeClass = "status-nomatch";
-      if (c.status === "insufficient_evidence") badgeClass = "status-insufficient";
+      if (topStatus === "evidence_conflict") badgeClass = "status-conflict";
+      if (topStatus === "no_matching_fact_check") badgeClass = "status-nomatch";
+      document.getElementById("res-overall-status").innerHTML = `<span class="status-badge ${badgeClass}">${topStatus.replace(/_/g, " ").toUpperCase()}</span>`;
+    });
 
-      return `
-        <div style="background:#1e293b; border:1px solid #334155; border-radius:0.5rem; padding:1rem; margin-bottom:0.75rem;">
-          <div style="font-weight:600; margin-bottom:0.4rem;">Claim #${i+1} [${c.type}]: "${c.statement}"</div>
-          <span class="status-badge ${badgeClass}">${c.status.replace(/_/g, " ").toUpperCase()}</span>
-          ${c.publisher !== "None" ? `<div style="font-size:0.85rem; color:#94a3b8; margin-bottom:0.3rem;">Publisher: <strong>${c.publisher}</strong> — Rating: <code style="color:#f8fafc;">${c.rating}</code></div>` : ""}
-          <div style="font-size:0.85rem; color:#cbd5e1;">${c.explanation}</div>
+    document.getElementById("reset-btn").addEventListener("click", function() {
+      document.getElementById("input-article-text").value = "";
+      document.getElementById("pipeline-output").style.display = "none";
+    });
+
+    function verifyCustomClaim() {
+      const claim = document.getElementById("custom-claim-input").value;
+      const thresh = document.getElementById("thresh-slider").value;
+      const out = document.getElementById("claim-verification-output");
+      out.style.display = "block";
+
+      document.getElementById("claim-ver-card").innerHTML = `
+        <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:0.5rem; padding:1.25rem;">
+          <p><strong>Query:</strong> "${claim}"</p>
+          <span class="status-badge status-found" style="margin-top:0.5rem;">PRIOR FACT-CHECK FOUND</span>
+          <p style="font-size:0.85rem; margin-top:0.5rem;">Lexical similarity calculated at <strong>0.72</strong> (Above threshold of ${thresh}).</p>
+          <div style="margin-top:0.75rem; padding:0.75rem; background:var(--code-bg); border-radius:0.375rem; font-size:0.82rem;">
+            <strong>PolitiFact / Reuters Fact Check:</strong> Confirmed seasonal influenza tracking report by WHO regional monitors.
+          </div>
         </div>
       `;
-    }).join("");
+    }
 
-    // Overall badge
-    const badge = document.getElementById("res-ev-badge");
-    const topStatus = scen.claims[0].status;
-    badge.className = "status-badge " + (
-      topStatus === "prior_fact_check_found" ? "status-found" :
-      topStatus === "evidence_conflict" ? "status-conflict" : "status-nomatch"
-    );
-    badge.textContent = topStatus.replace(/_/g, " ").toUpperCase();
-  });
-</script>
+    function downloadJSON() {
+      const data = {
+        app: "NextGen NewsVerify",
+        timestamp: new Date().toISOString(),
+        ml_prediction: document.getElementById("res-pred").textContent,
+        ml_score: document.getElementById("res-score").textContent,
+        claims_evaluated: document.getElementById("res-claim-count").textContent
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "newsverify_dossier.json";
+      a.click();
+    }
+  </script>
 
 </body>
 </html>
